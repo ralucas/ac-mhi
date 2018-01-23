@@ -40,7 +40,6 @@ Example:
 ==> `output_videos/classified_test1.mp4`  
 
 ## Links
-- Video Showcase: <https://youtu.be/Fo-wd0yMZVg>
 - Multiple Activity Videos:
     - Handclapping & Boxing Video: <https://youtu.be/dEtfgAYwCg4>
     - Multitude activity Video: <https://youtu.be/x_hFKZzc0jw>

@@ -1,0 +1,13 @@
+*.zip
+input_videos/
+test_output/
+.ipynb*
+output/
+*.mp4
+output_videos/
+training/
+zip_videos/
+*.ipynb
+writeup/
+papers/
+doc/

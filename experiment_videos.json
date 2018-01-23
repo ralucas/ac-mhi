@@ -1,0 +1,64 @@
+{
+  "Test1.mp4": [
+    {
+      "0-140": "handwaving"
+    },
+    {
+      "141-145": "no_activity"
+    },
+    {
+      "146-290": "boxing"
+    },
+    {
+      "291-299": "no_activity"
+    },
+    {
+      "300-815": "walking"
+    },
+    {
+      "816-914": "no_activity"
+    },
+    {
+      "915-1315": "jogging"
+    }
+  ],
+  "Test2.mp4": [
+    {
+      "0-49": "no_activity"
+    },
+    {
+      "50-519": "walking"
+    },
+    {
+      "520-749": "boxing"
+    },
+    {
+      "750-1079": "walking"
+    },
+    {
+      "1080-1323": "handwaving"
+    }
+  ],
+  "Test3.mp4": [
+    {
+      "0-440": "handclapping"
+    },
+    {
+      "441-1160": "walking"
+    },
+    {
+      "1161-1459": "handwaving"
+    }
+  ],
+  "Test4.mp4": [{
+      "0-527": "boxing"
+  }],
+  "Test5.mp4": [
+    {
+      "0-155": "handwaving"
+    },
+    {
+      "156-299": "boxing"
+    }
+  ]
+}

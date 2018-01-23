@@ -1,7 +1,8 @@
 Activity Classification using MHI
 ---
 Author: Richard Lucas  
-Email: rlucas9@gatech.edu
+
+*Writeup and Blog Post can be found here <http://blog.richardalucas.com/2017/12/03/Activity-Classification-using-MHI-Techniques/>*
 
 ## Introduction
 

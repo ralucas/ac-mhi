@@ -209,14 +209,6 @@ class ActivityQuantifier:
             mei_agg = np.zeros(prev_frame.shape, dtype=np.int32)
             mhi_image = np.zeros(prev_frame.shape, dtype=np.int32)
 
-            # qtr_frame = (sequence[1] - sequence[0]) / 4
-            # start = sequence[0] + self.tau
-            # half_start = qtr_frame + sequence[0]
-            # start = start if start < half_start else half_start
-            #
-            # end = start + self.tau
-            # # half_end = sequence[1] - qtr_frame
-            # end = end if end < sequence[1] else sequence[1]
             if count != seq[0]:
                 count = self.jump_to_frame(seq[0], count)
             while count <= seq[1]:
@@ -248,8 +240,6 @@ class ActivityQuantifier:
                     mei_agg[mei_agg > 1] = 1
                     cv2.imwrite("test_output/{}_mei_agg.png".format(self.action), mei_agg*255)
                     cv2.imwrite("test_output/{}_curr_frame.png".format(self.action), morph_frame)
-                    # cv2.imwrite("test_output/{}_mhi.png".format(self.action),
-                    #             np.int((np.float32(mhi_image) / 15.)*255.))
 
                 prev_frame = morph_frame
                 count += 1
@@ -326,10 +316,7 @@ class ActivityTrainer:
                 _, mhis = ac.build_mei_mhi()
                 for mhi in mhis:
                     hus = ac.hu_moments(mhi)
-                    # cms, sis = ac.central_moments(mhi)
-                    # cmv = cms.values()
                     self.Xtrain.append(hus)
-                    # self.Xtrain.append(sis.values())
                     self.ytrain.append(y_val)
 
     def build_test_sets(self):
@@ -340,9 +327,7 @@ class ActivityTrainer:
                 _, mhis = ac.build_mei_mhi()
                 for mhi in mhis:
                     hus = ac.hu_moments(mhi)
-                    # cms, sis = ac.central_moments(mhi)
                     self.Xtest.append(hus)
-                    # self.Xtest.append(sis.values())
                     self.ytest.append(y_val)
 
     def train(self):
@@ -360,16 +345,6 @@ class ActivityTrainer:
         p_test = self.trainer.predict(self.Xtest)
         p_train = self.trainer.predict(self.Xtrain)
         return p_train, p_test
-
-    # def predict(self, video_file):
-    #     ac = ActivityQuantifier(filename=video_file)
-    #     _, mhis = ac.build_mei_mhi()
-    #     X_predict = []
-    #     for mhi in mhis:
-    #         # hus = ac.hu_moments(mhi)
-    #         cms = ac.central_moments(mhi)
-    #         # X_predict.append(hus)
-    #     return self.trainer.predict(X_predict)
 
 class ActivityPredictor:
     def __init__(self, pkl_file=None, video_file=None, out_name=None):
@@ -467,17 +442,11 @@ class ActivityPredictor:
             if np.sum(np.array(self.predictions[-self.pred_tol:]) == prediction) > (self.pred_tol-2):
                 return prediction
             else:
-                # unique, counts = np.unique(np.array(np.array(self.predictions)[-self.pred_tol:]), return_counts=True)
-                # d = dict(zip(unique, counts))
-                # m = max(d.iteritems(), key=operator.itemgetter(1))[0]
-                # return m
                 return np.bincount(np.array(np.array(self.predictions)[-self.pred_tol:])).argmax()
 
     def do_prediction(self, mhi, tau_key):
         X_predict = []
         hus = self.aq.hu_moments(mhi)
-        # cms, sis = aq.central_moments(mhi)
-        # X_predict.append(sis.values())
         X_predict.append(hus)
         prediction = self.trainer.predict(X_predict)
         if self.labels[prediction[0]] == tau_key:
@@ -529,11 +498,9 @@ class ActivityPredictor:
                     X_predict = []
                     start2 = time.time()
                     hus = aq.hu_moments(mhi)
-                    # cms, sis = aq.central_moments(mhi)
                     end2 = time.time()
                     moment_time = end2 - start2
                     mom_times.append(moment_time)
-                    # X_predict.append(sis.values())
                     X_predict.append(hus)
                     prediction = self.trainer.predict(X_predict)
                     best_prediction = self.get_best_prediction(prediction[0])
@@ -583,3 +550,4 @@ class ActivityPredictor:
         print "Get Mei Mhi time:", np.average(meimhi_times)
         print "e2e times:", np.average(tt_times)
         return self.video_name, self.predictions
+
